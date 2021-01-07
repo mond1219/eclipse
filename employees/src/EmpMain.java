@@ -14,7 +14,6 @@ public class EmpMain {
 	public void start() {
 		//아이디와 비밀번호를 입력받아 로그인 구현하기 
 		Login.id =conInput("아이디");
-		
 		Login.pwd =conInput("비밀번호");
 		if(Login.loginCheck()) {//로그인시 
 			//초기 데이터 셋팅

@@ -19,29 +19,16 @@ public class BookMain {
 		bkMemerData.setbkMemerList(); //회원 데이터 셋팅
 		//회원 로그인
 		String memName;
-		int memPwd;
 		do {
 			MemLogin.name=input("회원이름을 입력하세요");
-			MemLogin.pwd = Integer.parseInt(input("비밀번호를 입력하세요"));
+			MemLogin.pwd = input("비밀번호를 입력하세요");
 			memName =MemLogin.name;
-			memPwd = MemLogin.pwd;
+			
 			if (MemLogin.memCheck()==true) {
 				break;
 			}
 			}while(true);
-//		do {
-//			memName =input("회원이름을 입력하세요");
-//			bkMemberVO vo = bkMemerData.memberList.get(memName); //입력받은 회원의 정보
-//			memPwd = input("비밀번호를 입력하세요");
-//			if(vo.getMemName()==null) {
-//				System.out.println("회원이 등록이되어있지 않습니다.");
-//			}else if(vo.getMemPwd()== Integer.parseInt(memPwd)){
-//				System.out.println("회원 로그인 성공");
-//				break;
-//			}else {
-//				System.out.println("제대로 입력해주세요");
-//			}
-//		}while(true);
+
 		BookData.setBookList();//책 데이터 셋팅
 		do {
 			String menu = input("메뉴[1.책목록, 2.책검색, 3.비밀번호 변경, 4.현재 대출권수, 5.종료");
@@ -59,8 +46,6 @@ public class BookMain {
 				break;
 			}
 		}while(true);
-		
-		
 	}
 	
 	public void admin() { //관리자 모드 
@@ -211,12 +196,12 @@ public class BookMain {
 			System.out.printf("%d\t%s\t%s\t%s\n", vo.getBookNum(),vo.getBookName(),vo.getBookPub(),vo.getBookMng());
 		}
 	}
+	
 	public String input(String msg) {
 		System.out.println(msg);
 		return scan.nextLine();
 	}
 	
-
 	public static void main(String[] args) {
 		new BookMain();
 	}

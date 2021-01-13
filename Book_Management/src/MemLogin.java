@@ -1,7 +1,7 @@
 
 public class MemLogin {
 	public static String name;
-	public static int pwd;
+	public static String pwd;
 	public MemLogin() {}
 	
 	public static boolean memCheck() {
@@ -10,7 +10,7 @@ public class MemLogin {
 		if(vo.getMemName()==null) {
 			System.out.println("회원이 등록되어있지 않습니다.");
 			return false;
-		}else if(vo.getMemPwd()==pwd) {
+		}else if(String.valueOf(vo.getMemPwd()).equals(pwd)) { //비밀번호 동일하다면 
 			System.out.println("로그인 되었습니다.");
 			return true;
 		}else {

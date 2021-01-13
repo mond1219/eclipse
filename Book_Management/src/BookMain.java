@@ -83,26 +83,20 @@ public class BookMain {
 	//회원모드 4.현재 회원이 대출한 책 
 	public void nowOut(String name2) {
 		int a=1;
+		//////////////////////////////////
 //		String realName;
 //		//입력받은 문자를 key로 바로 인식못하여 검색한다.
-//		Set<String> keyset2 = bkMemerData.memberList.keySet();
-//		Iterator ii =keyset2.iterator();
-//		
-//		while(ii.hasNext()) {
-//			bkMemberVO vo = bkMemerData.memberList.get(ii.hasNext());
-//			if(vo.getMemName().indexOf(name2)>=0) { //입력한 문자가 key에 있다면
-//				//realName =vo.getMemName();	
-//				break;
-//			}
-//		}
-//		
+//		관리자모드에서 등록한 사용자는 대출권수 인식이 된다. 하지만 기존 데이터에 있는 사용자는 조회가 되지 않는다. 그이유는 뭘까,,,
+		
+		
+//		///////////////////////////////////////////////////////////
 		
 		bkMemberVO vo = bkMemerData.memberList.get(name2);
+		System.out.println(vo.getMemPwd());
 //		System.out.println("dfff-->"+vo);
 //		System.out.println("대출권수 확인 "+vo.getMemOut());
 //		
 		if(vo.getMemOut()>0) { //대출한 책이 존재할 경우
-			
 			Set<String> keyset = BookData.bookList.keySet();
 			Iterator i =keyset.iterator();
 			while(i.hasNext()) {
@@ -121,10 +115,15 @@ public class BookMain {
 	}
 	//회원모드 3. 비밀번호 변경 
 	public void memPwdChange(String name2) {
+		//기존 멤버 데이터들은 비밀번호가 바뀌지 않는다. 
+		
 		bkMemberVO vo = bkMemerData.memberList.get(name2);
 		String pwd2 =input("변경할 비밀번호 입력하세요");
 		vo.setMemPwd(Integer.parseInt(pwd2));
+		
+		
 		System.out.println("변경한 비밀번호 : "+vo.getMemPwd());
+		
 	}
 	
 	
@@ -203,7 +202,6 @@ public class BookMain {
 					vo.setBookOut(memName2);
 					vo.setBookMng("대출");//대출로 전환
 					
-
 					System.out.println("대출되었습니다.");
 					break;
 				}

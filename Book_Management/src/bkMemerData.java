@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class bkMemerData {
-	public static HashMap<String, bkMemberVO> memberList = new HashMap<String, bkMemberVO> ();
+	public static HashMap<String,bkMemberVO> memberList = new HashMap<String, bkMemberVO>();
 	
 	public bkMemerData() {}
 	public static void setbkMemerList() {

@@ -20,7 +20,7 @@ public class EmpMain {
 			//static이므로 객체는 따로 안만들어줘도 된다. 
 			empDataSet.setEmpList();
 			do {
-				String menu = conInput("메뉴[1.사원전체목록, 2.사원등록, 3.사원수정, 4.사원 삭제, 5.종료]");
+				String menu = conInput("메뉴[1.사원전체목록, 2.사원등록, 3.사원수정, 4.사원 삭제, 5.종료  6.검색]");
 				if(menu.equals("5")) {break;}
 				else if(menu.equals("1")) {
 					//사원 목록
@@ -35,6 +35,8 @@ public class EmpMain {
 				}else if(menu.equals("4")) {
 					empDel();
 					empOutput();
+				}else if(menu.contentEquals("6")) {
+					empSearch();
 				}
 			}while(true);
 			}
@@ -42,6 +44,21 @@ public class EmpMain {
 			//로그인 실패시
 			}
 		}
+	//6.
+	public void empSearch() {
+		String search = conInput("검색할 전화번호 입력=");
+		//키목록구하기 
+		Set<String> keySet =empDataSet.empList.keySet();
+		Iterator i =keySet.iterator();
+		while(i.hasNext()) {
+			String key = (String)i.next();
+			EmpVO vo =empDataSet.empList.get(key);
+			if(vo.getTel().indexOf(search)>=0) {//혹시 전화번호에 입력받은 숫자가 있느냐
+				System.out.printf("%d\t%s\t%s\t%s\t%s\n", vo.getEmpNo(), vo.getEmpName(),
+						vo.getTel(),vo.getDepart(),vo.getPosition());
+			}
+		}
+	}
 	//4.사원 삭제 
 	public void empDel() {
 		String empName =conInput("삭제할 사원명");

@@ -59,7 +59,7 @@ public class BookMain {
 		BookData.setBookList(); //데이터 셋팅
 		bkMemerData.setbkMemerList(); //회원 데이터 셋팅
 		do {
-			String menu = input("메뉴 [1.책목록, 2.대출/반납, 3.책 검색, 4.책 등록, 5.책 삭제, 6.회원 등록, 8.종료]");	
+			String menu = input("메뉴 [1.책목록, 2.대출/반납, 3.책 검색, 4.책 등록, 5.책 삭제, 6.회원 등록, 7.회원 삭제, 8.종료]");	
 			//6.회원 등록  7.회원 삭제 
 				if(menu.equals("1")) {
 					bkAllList();
@@ -68,11 +68,13 @@ public class BookMain {
 				}else if(menu.equals("3")) {//3.책 검색
 					bookSearch();
 				}else if(menu.equals("4")) {//4.책 등록
-					bookRegister();
+					allRegister(2);
 				}else if(menu.equals("5")) {//5.책 삭제
-					bookRemove();
+					allRemove(2);
 				}else if(menu.equals("6")) {//6.회원 등록
-					memIn();
+					allRegister(1);
+				}else if(menu.equals("7")) {//7.회원 삭제
+					allRemove(1);
 				}else if(menu.equals("8")) {//6.종료
 					System.out.println("관리자 모드가 종료되었습니다.");
 						break;
@@ -93,24 +95,34 @@ public class BookMain {
 		vo.setMemPwd(Integer.parseInt(pwd));
 		System.out.println("변경한 비밀번호 : "+pwd);
 	}
-	//6.회원 등록
-	public void memIn() {
-		String memName = input("회원 이름");
-		int memPwd=Integer.parseInt(input("회원 비밀번호"));
-		bkMemerData.memberList.put(memName, new bkMemberVO(memName, 0,memPwd));
-	}
-	//5.책 삭제 
-	public void bookRemove() {
-		String bookName = input("삭제할 책 이름");
+	
+	
+	//5.책 삭제  
+	public void allRemove(int a) {
+		//a:1회원 삭제 a:2 책 삭제 
+		String bookName;
+		if(a == 1) {
+			bookName = input("삭제할 회원이름");
+		}else{ 
+			bookName = input("삭제할 책이름");
+		}
 		BookData.bookList.remove(bookName);
 	}
+	
 	//4.책 등록
-	public void bookRegister() {
+	public void allRegister(int a) {
+		if(a==2) {
 		int bookNum = Integer.parseInt(input("책번호"));
 		String bookName = input("책이름");
 		String bookPub = input("출판사");
 		String bookMng = "서고";
-		BookData.bookList.put(bookName, new BookVO(bookNum,bookName,bookPub,bookMng));
+		BookData.bookList.put(bookName, new BookVO(bookNum,bookName,bookPub,bookMng));}
+		else {
+			String memName = input("회원 이름");
+			int memPwd=Integer.parseInt(input("회원 비밀번호"));
+			bkMemerData.memberList.put(memName, new bkMemberVO(memName, 0,memPwd));
+			
+		}
 	}
 	
 	//3.책 검색 

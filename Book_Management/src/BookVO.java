@@ -3,15 +3,18 @@ public class BookVO {
 	private String bookName;//책이름
 	private String bookPub;// 출판사
 	private String bookMng;//대여관리 :서고 ,대출
+	private String bookOut; //대출시 빌려간 사람 이름
 	
 
 	public BookVO() {}
-	public BookVO(int bookNum, String bookName,String bookPub, String bookMng) {
+	public BookVO(int bookNum, String bookName,String bookPub, String bookMng, String bookOut) {
 		this.bookNum = bookNum;
 		this.bookName = bookName;
 		this.bookPub = bookPub;
 		this.bookMng = bookMng;
+		this.bookOut = bookOut;
 	}
+	
 	public int getBookNum() {
 		return bookNum;
 	}
@@ -35,6 +38,12 @@ public class BookVO {
 	}
 	public void setBookMng(String bookMng) {
 		this.bookMng = bookMng;
+	}
+	public String getBookOut() {
+		return bookOut;
+	}
+	public void setBookOut(String bookOut) {
+		this.bookOut = bookOut;
 	}
 	
 

@@ -14,6 +14,8 @@ public class EmpVO {
 		this.tel = tel;
 		this.depart = depart;
 		this.position = position;
+		
+		
 	}
 	
 	//getter, setter 만들기 

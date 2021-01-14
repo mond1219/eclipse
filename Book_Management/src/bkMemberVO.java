@@ -7,7 +7,7 @@ public class bkMemberVO {
 
 	public bkMemberVO() {}
 	public bkMemberVO(String memName, int memOut, int memPwd) {
-		this.memName = memName;
+	this.memName = memName;
 		this.memOut = memOut;
 		this.memPwd = memPwd;
 	}

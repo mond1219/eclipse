@@ -5,7 +5,7 @@ public class MemLogin {
 	public MemLogin() {}
 	
 	public static boolean memCheck() {
-		bkMemerData.setbkMemerList(); //회원 데이터 셋팅
+		
 		bkMemberVO vo = bkMemerData.memberList.get(name);
 		if(vo.getMemName()==null) {
 			System.out.println("회원이 등록되어있지 않습니다.");

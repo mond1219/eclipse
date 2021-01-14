@@ -33,7 +33,7 @@ public class BookMain {
 		do {
 			String menu = input("메뉴[1.책목록, 2.책검색, 3.비밀번호 변경, 4.현재 대출권수, 5.종료");
 			if(menu.equals("1")) {
-				bkAllList();
+				bkAllList(1);
 			}else if(menu.equals("2")) {
 				bookSearch();
 			}else if(menu.equals("3")){//비밀번호 변경 
@@ -57,9 +57,9 @@ public class BookMain {
 		}
 		}while(true);
 		do {
-			String menu = input("메뉴 [1.책목록, 2.대출/반납, 3.책 검색, 4.책 등록, 5.회원 등록, 6.책 삭제, 7.회원 삭제, 8.종료]");	
+			String menu = input("메뉴 [1.책목록, 2.대출/반납, 3.책 검색, 4.책 등록, 5.회원 등록, 6.책 삭제, 7.회원 삭제, 8.종료, 9.회원목록]");	
 				if(menu.equals("1")) {
-					bkAllList();
+					bkAllList(1);
 				}else if(menu.equals("2")) {//2.대출 반납
 					bookout();
 				}else if(menu.equals("3")) {//3.책 검색
@@ -72,7 +72,10 @@ public class BookMain {
 					allRemove("2");
 				}else if(menu.equals("7")) {//7.회원 삭제
 					allRemove("1");
-				}else if(menu.equals("8")) {//6.종료
+				}else if(menu.equals("9")) { //9.회원목록 출력
+					bkAllList(2);
+				}
+				else if(menu.equals("8")) {//8.종료
 					System.out.println("관리자 모드가 종료되었습니다.");
 						break;
 				}
@@ -194,6 +197,7 @@ public class BookMain {
 				if(yn.equals("1")) {
 					//회원 대출권수+1 입력해주기 
 					String memName2 =input("회원이름 입력");
+					
 					bkMemberVO bo = bkMemerData.memberList.get(memName2); //대출할 회원 정보 입력받기 
 					System.out.println("dfff-->"+bo);
 					bo.setMemOut(bo.getMemOut()+1);
@@ -221,7 +225,7 @@ public class BookMain {
 					bo.setMemOut(bo.getMemOut()-1);
 					
 					vo.setBookOut("");//반납시 책 대출인 목록 초기화
-					vo.setBookMng("서가");
+					vo.setBookMng("서고");
 					System.out.println("반납되었습니다.");
 					break;
 				}else if(yn.equals("2")) {
@@ -236,17 +240,34 @@ public class BookMain {
 
 	}
 	//1.책목록 출력
-	public void bkAllList() {
-		Set<String>keyList = BookData.bookList.keySet();
-		Iterator<String> i =keyList.iterator();
-		
-		System.out.println("번호\t 책이름\t 출판사\t 서가/대출");
-		while(i.hasNext()) {//값이 존재하면 
-			BookVO vo = BookData.bookList.get(i.next());//책 1권의 정보를 담기
+	public void bkAllList(int a) {
+		if(a ==1) { //책 출력
+			Set<String>keyList = BookData.bookList.keySet();
+			Iterator<String> i =keyList.iterator();
 			
-			System.out.printf("%d\t%s\t%s\t%s\n", vo.getBookNum(),vo.getBookName(),vo.getBookPub(),vo.getBookMng());
+			System.out.println("번호\t 책이름\t 출판사\t 서고/대출");
+			
+			while(i.hasNext()) {//값이 존재하면 
+				BookVO vo = BookData.bookList.get(i.next());//책 1권의 정보를 담기
+				
+				System.out.printf("%d\t%s\t%s\t%s\n", vo.getBookNum(),vo.getBookName(),vo.getBookPub(),vo.getBookMng());
+			}
+		}else {//회원 목록 출력
+			Set<String> keyList2 = bkMemerData.memberList.keySet();
+			Iterator<String> ii = keyList2.iterator();
+			System.out.println("이름\t 대출권수\t 회원 비밀번호");
+			while(ii.hasNext()) {  //값이 존재하면 {
+				bkMemberVO bo = bkMemerData.memberList.get(ii.next()); //회원 1명의 정보를 담기
+				System.out.printf("%S\t%s\t%s\n",bo.getMemName(),bo.getMemOut(),bo.getMemPwd());
+			}
+			
+			
+			
+			}
+		
+			
 		}
-	}
+	
 	
 	public String input(String msg) {
 		System.out.println(msg);

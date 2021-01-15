@@ -4,12 +4,17 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,11 +23,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MenuTest extends JFrame implements ActionListener{
 	JTextArea ta = new JTextArea();
 	JScrollPane sp = new JScrollPane(ta);
 	JMenuBar mb = new JMenuBar();
+	////////메뉴만들기//////////////////////
 		JMenu fileMenu = new JMenu("파일");
 			JMenuItem newMenuItem = new JMenuItem("새문서");
 			JMenuItem openMenuItem = new JMenuItem("열기");
@@ -38,6 +46,7 @@ public class MenuTest extends JFrame implements ActionListener{
 				JMenuItem memoMenuItem = new JMenuItem("메모장");
 				JMenuItem eitplusMenuItem = new JMenuItem("에디트플러스");
 			JMenuItem compileMenuItem = new JMenuItem("컴파일");
+			
 		/////////툴바///////////
 		JToolBar tb = new JToolBar();
 		//새문서
@@ -151,13 +160,13 @@ public class MenuTest extends JFrame implements ActionListener{
 	}
 	//오버라이딩              이벤트에 담긴 객체가  JMenuItem, JButton, JComboBox이거 인지 확인해 주는 게 instanceof이다. 
 	public void actionPerformed(ActionEvent ae) {
-		//String eventMenu=ae.getActionCommand();
-		
 		Object eventObj = ae.getSource(); //버튼은 라벨이 없어 겟소스 해야한다.
 		//이벤트가 발생한 객체가 어떤 클래스로 생성된 것인지 확인
 		if(eventObj instanceof JMenuItem) { //JMenuItem 으로 만들어진 객체만 들어와라 
 			String eventMenu=ae.getActionCommand();
-			if(eventMenu.equals("종료")) {
+			if(eventMenu.contentEquals("열기")) {
+				fileOpen();
+			}else if(eventMenu.equals("종료")) {
 				System.exit(0);
 			}else if(eventMenu.equals("오려두기")) {
 				setCut();
@@ -179,22 +188,62 @@ public class MenuTest extends JFrame implements ActionListener{
 				}else if(bold ==1) {
 					bold =0;
 				}
-				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, (Integer)fontSize.getSelectedItem());
+				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, 
+						               (Integer)fontSize.getSelectedItem());
 				ta.setFont(fnt);
 			}else if(eventObj == italicBtn) {
 				if(italic == 0) italic=2;
 				else italic =0;
-				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, (Integer)fontSize.getSelectedItem());
+				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, 
+						                  (Integer)fontSize.getSelectedItem());
 				ta.setFont(fnt);
+			}else if(eventObj == openBtn) { //버튼에도 열기 추가
+				fileOpen();
 			}
 		}else if(eventObj instanceof JComboBox) {
 			if(eventObj == fontSize|| eventObj == fontName) {
-				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, (Integer)fontSize.getSelectedItem());
+				fnt =new Font((String)fontName.getSelectedItem(),bold+italic, 
+						               (Integer)fontSize.getSelectedItem());
 				ta.setFont(fnt);
 			}
 		}
 		
 	}
+	//파일 열기
+	public void fileOpen() {
+		File f= new File("D://io");
+		JFileChooser fc = new JFileChooser(f);//파일 탐색기
+		//여러파일을 선택할 수 있도록 설정
+		fc.setMultiSelectionEnabled(true); //true : 다중선택 false : 단일선택
+		//필터 설정
+		FileFilter ff1 =new FileNameExtensionFilter("이미지", "jpg","jpeg","gif","png","bmp");
+		fc.addChoosableFileFilter(ff1);
+		FileFilter ff2 = new FileNameExtensionFilter("java", "java","JAVA");
+		fc.addChoosableFileFilter(ff2);
+		//0:열기, 1:취소
+		int state = fc.showOpenDialog(this);//(부모창) 현재 프레임이다,파일 탐색기 열림
+		if(state==0) {
+			try {
+				ta.setText("");//원래 있는 컨텐츠 지우기
+				//File selFile = fc.getSelectedFile();
+				File selFile[] = fc.getSelectedFiles();
+				
+				for(File s : selFile) {
+					FileReader fr = new FileReader(s);
+					BufferedReader br = new BufferedReader(fr); //한줄씩 읽기 
+					while(true){
+						String inData = br.readLine();
+						if(inData ==null) break;
+						ta.append(inData+"\n");
+					}//while
+				}
+			}catch(Exception e) {
+				System.out.println("파일열기 에러 발생....");
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	//외부 실행형 파일 구현
 	public void startRumtime(String process) {
 		Runtime run = Runtime.getRuntime();

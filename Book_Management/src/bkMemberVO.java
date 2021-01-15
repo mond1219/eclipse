@@ -1,4 +1,5 @@
 
+
 public class bkMemberVO {
 	// 회원 이름, 대출권수, 회원비밀번호
 	private String memName;//회원이름

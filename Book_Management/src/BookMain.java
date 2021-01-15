@@ -19,6 +19,10 @@ public class BookMain {
 		}while(true);
 		
 	}
+	
+	
+	
+	
 	public void member() {//회원모드
 		do {
 			MemLogin.name=input("회원이름을 입력하세요");
@@ -95,7 +99,7 @@ public class BookMain {
 		bkMemberVO vo = bkMemerData.memberList.get(name2);
 		if(vo.getMemOut()>0) { //대출한 책이 존재할 경우
 			Set<String> keyset = BookData.bookList.keySet();
-			Iterator i =keyset.iterator();
+			Iterator<String> i =keyset.iterator();
 			while(i.hasNext()) {
 				BookVO bo = BookData.bookList.get(i.next());
 				if(bo.getBookOut().indexOf(name2)>=0) { //책 데이터에 대출인 이름이 있을경우

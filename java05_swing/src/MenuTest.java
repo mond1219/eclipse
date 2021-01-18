@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
@@ -71,7 +73,9 @@ public class MenuTest extends JFrame implements ActionListener{
 		int bold =0, italic = 0;
 		Font fnt = new Font("굴림체",0,14); //초기 셋팅
 		
-			
+		//현재 작업중인 파일 객체
+		File nowFile;
+		
 	
 	public MenuTest() {
 		super("메모장");
@@ -164,8 +168,12 @@ public class MenuTest extends JFrame implements ActionListener{
 		//이벤트가 발생한 객체가 어떤 클래스로 생성된 것인지 확인
 		if(eventObj instanceof JMenuItem) { //JMenuItem 으로 만들어진 객체만 들어와라 
 			String eventMenu=ae.getActionCommand();
-			if(eventMenu.contentEquals("열기")) {
+			if(eventMenu.equals("새문서")) {
+				newFile();
+			}else if(eventMenu.contentEquals("열기")) {
 				fileOpen();
+			}else if(eventMenu.equals("저장")) {
+				fileSave();
 			}else if(eventMenu.equals("종료")) {
 				System.exit(0);
 			}else if(eventMenu.equals("오려두기")) {
@@ -199,6 +207,10 @@ public class MenuTest extends JFrame implements ActionListener{
 				ta.setFont(fnt);
 			}else if(eventObj == openBtn) { //버튼에도 열기 추가
 				fileOpen();
+			}else if(eventObj == newBtn) {
+				newFile();
+			}else if(eventObj == saveBtn) {
+				fileSave();
 			}
 		}else if(eventObj instanceof JComboBox) {
 			if(eventObj == fontSize|| eventObj == fontName) {
@@ -208,6 +220,57 @@ public class MenuTest extends JFrame implements ActionListener{
 			}
 		}
 		
+	}
+	//새문서
+	public void newFile() {
+		nowFile = null; //작업문서 객체 초기화
+		ta.setText("");//공백넣기
+		setTitle("메모장");//제목도 다시 리셋
+	}
+	//파일 저장
+	public void fileSave() {
+		if(nowFile ==null) {//새로 문서를 작성후 저장한다.
+			JFileChooser fc = new JFileChooser(); //파일을 탐색
+			
+			int state =fc.showSaveDialog(this); //saveBtn =0, cancelBtn =1
+			if(state ==0 ) { //저장버튼을 선택시 
+				//현재 파일초이스에서 선택한 드라이브명, 경로, 파일명 필요
+				File f =fc.getSelectedFile();//드라이브 명, 경로, 파일면이 선택된다.
+				//글내용
+				String str = ta.getText();//전체 문자를 얻어온다.
+				//중복된 이름
+				if(!f.exists()) { //존재하면 true 존재하지 않으면 false
+					JOptionPane.showMessageDialog(this, "이미존재하는 파일명입니다.\n저장하기가 취소되었습니다.");
+				}else {
+					try {
+						//FileWriter객체
+						FileWriter fw = new FileWriter(f);
+						fw.write(str,0,str.length());
+						fw.flush();
+						fw.close();
+						
+						nowFile = f;
+						setTitle(f.getPath());
+						
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+			
+		}else {//이미 있는 문서를 열어서 수정후 저장한다.
+			try {
+				String writexTxt = ta.getText(); //화면에 있는 모든 문자가 writeTxtfh emfdjrksek.
+				FileWriter fw = new FileWriter(nowFile);
+				fw.flush();
+				fw.close();
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			}
 	}
 	//파일 열기
 	public void fileOpen() {
@@ -224,6 +287,10 @@ public class MenuTest extends JFrame implements ActionListener{
 		int state = fc.showOpenDialog(this);//(부모창) 현재 프레임이다,파일 탐색기 열림
 		if(state==0) {
 			try {
+				//현재파일명을 jframe에 제목으로 설정
+				String path = s.getPath();
+				setTitle(path);
+				nowFile =s;
 				ta.setText("");//원래 있는 컨텐츠 지우기
 				//File selFile = fc.getSelectedFile();
 				File selFile[] = fc.getSelectedFiles();

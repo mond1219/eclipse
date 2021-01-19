@@ -287,15 +287,14 @@ public class MenuTest extends JFrame implements ActionListener{
 		int state = fc.showOpenDialog(this);//(부모창) 현재 프레임이다,파일 탐색기 열림
 		if(state==0) {
 			try {
-				//현재파일명을 jframe에 제목으로 설정
-				String path = s.getPath();
-				setTitle(path);
-				nowFile =s;
-				ta.setText("");//원래 있는 컨텐츠 지우기
-				//File selFile = fc.getSelectedFile();
+				ta.setText("");//원래 있는 컨테늧 지우기
 				File selFile[] = fc.getSelectedFiles();
 				
 				for(File s : selFile) {
+					//현재 파일명을 JFram에 제목으로 설정
+					String path = s.getPath();
+					setTitle(path);	
+					nowFile =s;
 					FileReader fr = new FileReader(s);
 					BufferedReader br = new BufferedReader(fr); //한줄씩 읽기 
 					while(true){
@@ -304,6 +303,7 @@ public class MenuTest extends JFrame implements ActionListener{
 						ta.append(inData+"\n");
 					}//while
 				}
+				
 			}catch(Exception e) {
 				System.out.println("파일열기 에러 발생....");
 				e.printStackTrace();

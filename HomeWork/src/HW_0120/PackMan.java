@@ -31,6 +31,7 @@ public class PackMan extends JFrame implements KeyListener{
 		
 		addKeyListener(this);//프레임이 키이벤트 추가
 		
+		
 		while(true) {
 		mc.repaint(); //다시 호출
 		if(j==0)setLeft();

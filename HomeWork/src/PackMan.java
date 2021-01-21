@@ -23,11 +23,9 @@ public class PackMan extends JFrame implements KeyListener{
 	public PackMan() {
 		super("PackMan");
 		add("Center",mc);
-		
 		setSize(800,800);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		
 		addKeyListener(this);//프레임이 키이벤트 추가
 		
 		while(true) {
@@ -36,11 +34,8 @@ public class PackMan extends JFrame implements KeyListener{
 		else if(j==1)setUp();
 		else if(j==2)setRight();
 		else if(j==3)setDown();
-		
 		try {Thread.sleep(5);}catch(Exception e) {} //0.1초 딜레이 주기 25로해야하는 데 빨리 볼려고 10
-		}
-		
-				
+		}	
 	}
 	public void keyPressed(KeyEvent e) {
 		int key= e.getKeyCode();

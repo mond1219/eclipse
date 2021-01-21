@@ -39,10 +39,10 @@ public class PackMan extends JFrame implements KeyListener{
 	}
 	public void keyPressed(KeyEvent e) {
 		int key= e.getKeyCode();
-			if(key==e.VK_UP) j=1;
-			else if(key==e.VK_DOWN)j=3;
-			else if(key==e.VK_RIGHT)j=2;
-			else if(key==e.VK_LEFT) j=0;
+			if(key==e.VK_UP||key==e.VK_W) j=1;
+			else if(key==e.VK_DOWN||key==e.VK_S)j=3;
+			else if(key==e.VK_RIGHT||key==e.VK_D)j=2;
+			else if(key==e.VK_LEFT||key==e.VK_A) j=0;
 		
 	}
 	//아래쪽 이동 메소드

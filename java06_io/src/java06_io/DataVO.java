@@ -1,4 +1,4 @@
-package java6_io;
+package java06_io;
 
 import java.io.Serializable;
 

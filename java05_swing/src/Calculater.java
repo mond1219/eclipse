@@ -14,6 +14,7 @@ public class Calculater extends JFrame implements ActionListener {
 	Font fnt = new Font("Arial",Font.BOLD,20);
 	//JFrame -North
 	JTextField resultTf = new JTextField("0.0"); 
+	
 	//JFrame- Center
 	JPanel centerPane = new JPanel(new BorderLayout()); //FlowLayout -> BorderLaout
 		JPanel northPane = new JPanel(new GridLayout(1,3));//위에 3개

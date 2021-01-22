@@ -33,10 +33,7 @@ public class PackMan_teacher extends JFrame  implements Runnable{
 		w=(int)canvasSize.getWidth()/2-25;
 		h=(int)canvasSize.getHeight()/2-25;
 		
-		//mc.setFocusable(true); //커서가 캔버
-		
-		
-		스에 집중한다.
+		//mc.setFocusable(true); //커서가 캔버스에 집중한다.
 		
 		
 	}

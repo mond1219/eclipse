@@ -46,21 +46,3 @@ public class DBConn {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -137,17 +138,56 @@ public class MemeberMain extends JFrame implements ActionListener{
 			setMemberDelete();
 		}else if(eventBtn.equals("엑셀로 쓰기")) {
 			setMemberExcelSave();
-		}
-		else if(eventBtn.equals("엑셀불러오기")) {
-			setMemberExcelCom();
+		}else if(eventBtn.equals("엑셀불러오기")) {
+			getMemberExcelCom();
 		}
 	}
 	//엑셀 파일 불러오기
-	public void setMemberExcelCom() {
-		JFileChooser fc = new JFileChooser();
-		FileFilter ff = new FileNameExtensionFilter("*.xls", "xls","XLS","Xls");
+	public void getMemberExcelCom() {
+		JFileChooser fc = new JFileChooser(); //어떤 파일을 가져올지 객체 생성
+		FileFilter ff = new FileNameExtensionFilter("*.xls", "xls","XLS","Xls"); //파일 필터 
 		fc.setFileFilter(ff); //엑셀 파일만 보여준다.
-		
+		//0:열기 1: 취소
+		int state=fc.showOpenDialog(this);
+		if(state ==0) {
+			try {
+				//선택해 놓은 파일정보가 필요하다. 
+				File selectFileName =fc.getSelectedFile(); //열기하려고 선택해놓은 파일 명
+				FileInputStream fis = new FileInputStream(selectFileName);
+				
+				//엑셀에서 파일 사용할수 있는 객체를 생성한다.
+				POIFSFileSystem poi = new POIFSFileSystem(fis);
+				
+				//workbook
+				HSSFWorkbook workbook = new HSSFWorkbook(poi);//(사용자가 골라놓은 파일 명)
+				//sheet
+				HSSFSheet sheet = workbook.getSheet("회원정보");
+				//row
+				int rowCount = sheet.getPhysicalNumberOfRows();//행수 : 5 0행은 한글이 들어있음
+				
+				List<MemberVO> lst = new ArrayList<MemberVO>();
+				
+				for(int row=1;row<rowCount;row++) {//1,2,3,4
+					//cell MemberList에 정보를 담아준다. 
+					MemberVO vo = new MemberVO();
+					HSSFRow rowData = sheet.getRow(row); //행구하기(한줄)
+					//번호
+					vo.setNum((int)rowData.getCell(0).getNumericCellValue());//doble형이므로 vo.setNum로 변환해준다.
+					vo.setUsername(rowData.getCell(1).getStringCellValue());
+					vo.setTel(rowData.getCell(2).getStringCellValue());
+					vo.setEmail(rowData.getCell(3).getStringCellValue());
+					vo.setAddr(rowData.getCell(4).getStringCellValue());
+					vo.setWritedate(rowData.getCell(5).getStringCellValue());
+					
+					lst.add(vo); //위 에 vo에 넣은 것을 List에 넣어준다.
+				}
+				
+				setNewTableLsit(lst);
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	//엑셀로 파일 쓰기
 	public void setMemberExcelSave() {
@@ -292,6 +332,7 @@ public class MemeberMain extends JFrame implements ActionListener{
 		List<MemberVO> lst =dao.memberAllSelect();
 		setNewTableLsit(lst);
 	}
+	
 	public void setNewTableLsit(List<MemberVO> lst) {
 		model.setRowCount(0);//JTable의 모든 레코드 지우기
 		for(int i=0;i<lst.size();i++) {

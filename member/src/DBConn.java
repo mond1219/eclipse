@@ -18,10 +18,10 @@ public class DBConn {
 	ResultSet rs = null;
 	
 	String sql = null;
-	
 	String url = "jdbc:oracle:thin:@192.168.0.62:1521:xe";
 	String username = "c##scott";
 	String userpwd = "tiger";
+	
 	
 	public DBConn() {}
 	

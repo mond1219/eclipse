@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 public class MemeberMain extends JFrame implements ActionListener{
+	
 	//JFrame - North - 회원 입력 폼
 	JPanel mainNorthPane = new JPanel(new BorderLayout());
 		JPanel formLabelPane = new JPanel(new GridLayout(6,1));

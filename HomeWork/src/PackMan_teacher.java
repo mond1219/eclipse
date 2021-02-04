@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-public class PackMan_teacher extends JFrame {
+public class PackMan_teacher extends JFrame  implements Runnable{
 	Image img;
 	MyCanvas mc = new MyCanvas();
 	int x,y;
@@ -21,7 +21,7 @@ public class PackMan_teacher extends JFrame {
 		
 		mc = new MyCanvas();
 		add(BorderLayout.CENTER, mc);
-		setSize(500,500);
+		setSize(300,300);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
@@ -34,6 +34,9 @@ public class PackMan_teacher extends JFrame {
 		
 		//mc.setFocusable(true); //커서가 캔버스에 집중한다.
 		
+		
+	}
+	public void run() {
 		while(true) {
 			try {Thread.sleep(200);}catch(Exception e) {}
 			//이미지 변환 
@@ -77,9 +80,6 @@ public class PackMan_teacher extends JFrame {
 		frameSize= getSize();
 		canvasSize = mc.getSize();
 	}
-	public static void main(String[] args) {
-		new PackMan_teacher();
-
-	}
+	
 
 }

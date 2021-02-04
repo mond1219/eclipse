@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+//이것도 아니다.
 public class ServerSocketTest {
 
 	public ServerSocketTest() {

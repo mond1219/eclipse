@@ -1,7 +1,7 @@
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-
+//이것도없다.
 public class MulticasteSocketSend {
 //224.0.0.0~239.255.255.255
 	

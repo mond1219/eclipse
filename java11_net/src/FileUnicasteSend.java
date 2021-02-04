@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-
+////이거는 파일 초이스 없다.
 public class FileUnicasteSend extends JFrame implements ActionListener{
 	JTextField tf = new JTextField("192.168.0.62");// ip받을 주소
 	JButton btn = new JButton("파일보내기");

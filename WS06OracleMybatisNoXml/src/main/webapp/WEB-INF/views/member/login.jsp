@@ -10,41 +10,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-<script>
-	/*    $(function(){
-	      
-	   }); */
-   $(()=>{
-      $("#boardDel").click(()=>{
-         if(confirm("삭제하시겠습니까?")){
-            location.href="boardDelete?no=${vo.no}";
-         }
-      })
-   });
-</script>
-
 </head>
 <body>
-<div class="container">
-	<h1>글내용보기</h1>
-	<ul>
-		<li>번호 : ${vo.no }</li>
-		<li>작성자 : ${vo.userid }</li>
-		<li>등록일 : ${vo.writedate }</li>
-		<li>제목 : ${vo.subject }</li>
-		<li>조회수 : ${vo.hit }</li>
-		<li>
-			${vo.content }
-		</li>
-	</ul>
-	<div>
-		<c:if test="${logId==vo.userid }">
-			<a href="boardEdit?no=${vo.no }">수정</a>
-			<a href="#" id="boardDel">삭제</a>
-		</c:if>
-		
-		
-	</div>
+<div class="containter">
+	<h1>로그인 폼</h1>
+	<form method="post" action="loginOk">
+		아이디 : <input type="text" name="userid" value="lssgt07"/>
+		비밀번호 : <input type="password" name="userpwd" value="lssgt07"/>
+		<input type="submit" value="login"/>
+	</form>
 </div>
 </body>
 </html>

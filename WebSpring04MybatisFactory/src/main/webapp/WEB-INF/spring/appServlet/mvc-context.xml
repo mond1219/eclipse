@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- Interceptor 처리할 컨트롤러를 등록
+		beans태그에 namespaces탭에서 mvc,context를 추가
+	 -->
+	 <mvc:interceptors><!-- web.xml에 등록해줘야한다. -->
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/boardWrite"/><!-- 로그인안하면 할수없는 컨트롤러들을 넣어준다. -->
+	 		<mvc:mapping path="/boardWriteOK"/>
+	 		<mvc:mapping path="/boardEdit"/>
+	 		<mvc:mapping path="/boardEditOk"/>
+	 		<mvc:mapping path="/boardDel"/>
+	 		<mvc:mapping path="/boardReply"/>
+	 		<mvc:mapping path="/replyEdit"/>
+	 		<mvc:mapping path="/reaplyDel"/>
+	 		<mvc:mapping path="/transactionForm"/>
+	 		<mvc:mapping path="/claseWrite"/>
+	 		<mvc:mapping path="/clseWriteOk"/>
+	 		<mvc:mapping path="/boardReplyFrm"/>
+	 		<mvc:mapping path="/claseWrite"/>
+	 		<mvc:mapping path="/claseWriteOk"/>
+	 		<mvc:mapping path="/claseWriteForm"/>
+	 		<mvc:mapping path="/claseWriteFormOk"/>
+	 		<mvc:mapping path="/claseEdit"/>
+	 		<mvc:mapping path="/claseDel"/>
+	 		<bean class="com.bitcamp.home.interceptor.LoginInterceptor"></bean>
+	 	</mvc:interceptor>
+	 </mvc:interceptors>
+		
+</beans>

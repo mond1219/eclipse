@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcamp.home.board.BoardReplyDAOImp">
+	<insert id="replyInsert" parameterType="com.bitcamp.home.board.BoardReplyVO">
+		insert into boardreply(no, num, content, userid, ip)
+		values (#{no}, boardsq.nextval, #{content}, #{userid}, #{ip} )
+	</insert>
+	<select id="allReplySelect" resultType="com.bitcamp.home.board.BoardReplyVO">
+		select num,content,userid, to_char(replydate, 'MM-DD HH:MI') replydate from boardreply
+		where no=#{param1} order by num desc
+	</select>
+	<update id="replyEdit">
+		update boardreply set content =#{param2} where num=#{param1}
+	</update>
+	<delete id="replyDel">
+		delete from boardreply where num=#{param1}
+	</delete>
+</mapper>

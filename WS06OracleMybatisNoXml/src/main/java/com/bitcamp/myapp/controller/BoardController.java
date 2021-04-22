@@ -19,9 +19,13 @@ public class BoardController {
 	BoardService boardservice;
 	
 	@RequestMapping("/list")
-	public ModelAndView boardList() {
+	public ModelAndView boardList(BoardVO vo) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", boardservice.allList());
+		/*
+		if(vo.getSearchWord()!=null) {
+			vo.setSearchWord("%"+vo.getSearchWord()+"%");
+		}*/
+		mav.addObject("list", boardservice.allList(vo));
 		mav.setViewName("board/boardList");
 		return mav;
 	}
@@ -56,5 +60,54 @@ public class BoardController {
 		model.addAttribute("list", boardservice.searchList(vo));
 		
 		return "board/boardList";
+	}
+	@RequestMapping("/boardEdit")
+	public ModelAndView boardEdit(int no) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("vo", boardservice.boardEditSelect(no));
+		mav.setViewName("board/boardEdit");
+		return mav;
+	}
+	@RequestMapping(value="/editOk", method=RequestMethod.POST)
+	public ModelAndView boardEditOk(BoardVO vo,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		vo.setUserid((String)session.getAttribute("logId"));
+		mav.addObject("no",vo.getNo());
+		if(boardservice.boardUpdate(vo)>0) {
+			//글수정 성공 
+			mav.setViewName("redirect:boardView");
+		}else {
+			//글수정 실패
+			mav.setViewName("redirect:boardEdit");
+		}
+		
+		return mav;
+	}
+	@RequestMapping("/boardDel")
+	public ModelAndView boardDel(BoardVO vo, HttpSession session) {
+		vo.setUserid((String)session.getAttribute("logId"));
+		ModelAndView mav = new ModelAndView();
+		if(boardservice.boardDelete(vo)>0) {
+			//삭제 성공
+			mav.setViewName("redirect:list");
+		}else {
+			mav.addObject("no",vo.getNo());
+			mav.setViewName("redirect:boardView");
+		}
+		return mav;
+	}
+	
+	//여러개의 레코드를 한번에 삭제하기
+	@RequestMapping("/multiDel")
+	public ModelAndView boardMultiDel(BoardVO vo) {
+		for(int no: vo.getCheckNo()) {
+			System.out.println("no="+no);
+		}
+		ModelAndView mav = new ModelAndView();
+		int result =boardservice.boardMultiDelete(vo.getCheckNo());
+		System.out.println("삭제된 레코드수 --->"+result);
+		mav.setViewName("redirect:list");
+		return mav;
 	}
 }

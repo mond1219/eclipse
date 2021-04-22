@@ -13,9 +13,39 @@
 <style>
 	ul, li{margin:0; padding:0; list-style-type:none;}
 	#boardList li{float:left; width:10%; height:40px; line-height:40px; border-bottom:1px solid lightblue; }
-	#boardList li:nth-child(5n+2){width:60%;}
+	#boardList li:nth-child(6n+3){width:50%;}
 	.wordcut{white-sapce:nowrap; overflow:hidden; text-overflow:ellips;}
 </style>
+<script>
+	/* $(()=>{
+			$("#serchFrm").submit((=>)){
+				if($("#searchWord").val()==""){
+					alert("검색어 입력하세요");
+					return false;
+				}
+				return true;
+			}
+	}); */
+	
+	$(document).ready(function(){
+	    //최상단 체크박스 클릭
+	    $("#checkall").click(function(){
+	        //클릭되었으면
+	        if($("#checkall").prop("checked")){
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+	            $("input[name=checkNo]").prop("checked",true);
+	            //클릭이 안되있으면
+	        }else{
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+	            $("input[name=checkNo]").prop("checked",false);
+	        }
+	    })
+	    //선택삭제가 클릭되면 
+	    $("#delSelect").click(function(){
+	    	$("#delList").submit();
+	    })
+	})
+</script>
 </head>
 <body>
 <div class="container">
@@ -24,7 +54,7 @@
 		<a href="boardWrite">글쓰기</a>
 	</c:if>
 	<div id="search">
-		<form method="get" action="boardSearch">
+		<form method="get" action="list">
 			<select name="searchKey">
 				<option value="subject">제목</option>
 				<option value="userid">작성자</option>
@@ -34,20 +64,28 @@
 			<input type="submit" value="검색"/>
 		</form>
 	</div>
-	<ul id="boardList">
-		<li>번호</li>
-		<li>제목</li>
-		<li>작성자</li>
-		<li>등록일</li>
-		<li>조회수</li>
-		<c:forEach var="vo" items="${list}">
-			<li>${vo.no }</li>
-			<li class="wordcut"><a href="boardView?no=${vo.no}">${vo.subject}</a></li>
-			<li>${vo.userid}</li>
-			<li>${vo.writedate }</li>
-			<li>${vo.hit }</li>
-		</c:forEach>
-	</ul>
+	<form id="delList"action="multiDel">
+		<p>
+			<input type="checkbox" id="checkall" value="전체선택"/>전체선택  
+			<input type="button" id="delSelect" value="선택삭제"/>
+		</p>
+		<ul id="boardList">
+			<li>선택</li>
+			<li>번호</li>
+			<li>제목</li>
+			<li>작성자</li>
+			<li>등록일</li>
+			<li>조회수</li>
+			<c:forEach var="vo" items="${list}">
+				<li><input type="checkbox"name="checkNo" value="${vo.no }"/></li>
+				<li>${vo.no }</li>
+				<li class="wordcut"><a href="boardView?no=${vo.no}">${vo.subject}</a></li>
+				<li>${vo.userid}</li>
+				<li>${vo.writedate }</li>
+				<li>${vo.hit }</li>
+			</c:forEach>
+		</ul>
+	</form>
 </div>
 
 </body>
